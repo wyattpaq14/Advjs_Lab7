@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body> 
+        
+        <h2>Log in</h2>
+        <form action="#" method="post">
+            
+            Username : <input name="username" type="text" value="" /> <br />
+            <p></p>
+            Password : <input name="password" type="password" /> <br />
+            <br />
+            
+            <input type="submit" value="submit" />
+            
+        </form>
+        
+         <div id="confirmation"></div>
+         
+         <script type="text/javascript" src="js/ajax.js"></script>
+         <script type="text/javascript">
+        
+            var form = document.querySelector('form');
+            var confirmation = document.querySelector('#confirmation');
+
+            form.addEventListener('submit', checkForm);
+
+
+            function checkForm(e) {
+                e.preventDefault();
+
+                var username = document.querySelector('input[name="username"]');
+                var password = document.querySelector('input[name="password"]');
+
+                var data = 'username='+username.value+'&password='+password.value;
+
+                var url = 'http://localhost/php/api/is-valid-login.php';
+                var verb = 'POST';
+                window.makeRequest(url, verb, data, window.httpResolve);
+
+            }
+        
+                    
+             function httpResolve() {                        
+                if ( this.status >= 200 && this.status < 300 ) {
+                    // Performs the function "resolve" when this.status is equal to 2xx
+                    console.log(this.response);
+                    var response = JSON.parse(this.response);
+                    if ( response.data.loginValid ) {
+                        window.confirmation.innerHTML = 'Login Valid';
+                    } else {
+                        window.confirmation.innerHTML = 'Login is not valid';
+                    }
+                } else {
+                    // Performs the function "reject" when this.status is different than 2xx
+                    console.log(this.statusText);
+                }                          
+             }
+
+                   
+        
+        </script>
+		
+		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2965.3179730689744!2d-71.47097204888313!3d41.99345097911126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e46985a1c4aebd%3A0x92aabe9884e5475!2s400+Highland+Corporate+Dr%2C+Cumberland%2C+RI+02864!5e0!3m2!1sen!2sus!4v1479399427425" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </body>
+</html>
+
+        

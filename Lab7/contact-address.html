@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+    </head>
+    <body>
+
+         <form action="#" method="post" class="form-horizontal">
+            <fieldset>
+                <legend>Contact Creation</legend>
+                <div class="form-group">
+                    <label for="fname" class="col-lg-2 control-label">First Name : </label>
+                    <div class="col-lg-2">
+                        <input name="fname" type="text" value="" class="form-control"/> 
+                    </div>
+                    <p></p>
+                </div>
+                <div class="form-group">
+                    <label for="lname" class="col-lg-2 control-label">Last Name : </label>
+                    <div class="col-lg-2">
+                        <input name="lname" type="text" value="" class="form-control"/> 
+                    </div>
+                    <p></p>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-lg-2 control-label">Email : </label>
+                    <div class="col-lg-2">
+                        <input name="email" type="text" value="" class="form-control"/> 
+                    </div>
+                    <p></p>
+                </div>
+                <div class="form-group">
+                    <label for="phone" class="col-lg-2 control-label">Phone : </label>
+                    <div class="col-lg-2">
+                        <input name="phone" type="text" value="" class="form-control"/> 
+                    </div>
+                    <p></p>
+                </div>
+                <div class="form-group">
+                    <label for="address1" class="col-lg-2 control-label">Address : </label>
+                    <div class="col-lg-2">
+                        <input name="address1" type="text" value="" class="form-control"/> 
+                    </div>
+                    <p></p>
+                </div>
+                <div class="form-group">
+                    <label for="address2" class="col-lg-2 control-label">Address 2 : </label>
+                    <div class="col-lg-2">
+                        <input name="address2" type="text" value="" class="form-control"/> 
+                    </div>
+                    <p></p>
+                </div>
+                <div class="form-group">
+                    <label for="city" class="col-lg-2 control-label">City : </label>
+                    <div class="col-lg-2">
+                        <input name="city" type="text" value="" class="form-control"/> 
+                    </div>
+                    <p></p>
+                </div>
+                <div class="form-group">
+                    <label for="state" class="col-lg-2 control-label">State : </label>
+                    <div class="col-lg-2">
+                        <input name="state" type="text" value="" class="form-control"/> 
+                    </div>
+                    <p></p>
+                </div>
+                <div class="form-group">
+                    <label for="zip" class="col-lg-2 control-label">Zip : </label>
+                    <div class="col-lg-2">
+                        <input name="zip" type="text" value="" class="form-control"/> 
+                    </div>
+                    <p></p>
+                </div>
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+
+        <div id="confirmation"></div>
+
+
+        <script type="text/javascript" src="js/ajax.js"></script>
+        <script type="text/javascript">
+
+            var form = document.querySelector('form');
+            var confirmation = document.querySelector('#confirmation');
+
+            form.addEventListener('submit', checkForm);
+
+            function checkForm(e) {
+                e.preventDefault();
+
+                var inputs = document.querySelectorAll('input');
+
+                var i = inputs.length;
+
+                var data = '';
+                while (i--) {
+                    if (inputs[i].name && inputs[i].name !== 'confirmPassword') {
+                        data += inputs[i].name + '=' + inputs[i].value + '&';
+                    }
+
+                }
+                data = data.slice(0, -1);
+                console.log(data);
+                var url = 'http://localhost/php/Lab7/api/addressSave.php';
+                var verb = 'POST';
+                if (inputs[0] === null) {
+                    alert("Error");
+                }
+                window.makeRequestPromise(url, verb, data).then(httpResolve);
+            }
+
+            function httpResolve(response) {
+                console.log(response);
+
+                if (response.data.loginSave) {
+                    displayMessage('Login Saved');
+                } else {
+                    displayMessage('Login could not be Saved');
+                }
+            }
+
+            function displayMessage(msg) {
+                window.confirmation.innerHTML = msg;
+            }
+
+
+
+            document.querySelector('input[name="username"]').addEventListener('blur', function () {
+                var url = 'http://localhost/api/user-name-taken.php';
+                var verb = 'POST';
+                var data = 'username=' + this.value;
+
+                window.makeRequestPromise(url, verb, data).then(function (response) {
+                    if (response.data.userNameTaken) {
+                        window.displayMessage('Sorry please use a different user name');
+                    } else {
+                        window.displayMessage('user name is available');
+                    }
+                });
+            });
+
+        </script>
+    </body>
+</html>
