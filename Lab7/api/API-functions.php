@@ -29,7 +29,7 @@ function userNameTaken($username) {
 
     $binds = array(
         ":username" => $username
-    );
+    ); 
 
     if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
         $response = true;

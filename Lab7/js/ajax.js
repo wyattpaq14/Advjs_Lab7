@@ -28,7 +28,7 @@ function makeRequestPromise(url, verb, data) {
     var promise = new Promise(httpPromise);
 
     function httpPromise(resolve, reject) {
-
+ 
 
         var httpRequest = new XMLHttpRequest();
 

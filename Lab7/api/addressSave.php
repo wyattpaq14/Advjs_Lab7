@@ -38,7 +38,7 @@ $status = 200;
 $response['data']['loginSave'] = addressSave($fname, $lname, $email, $phone, $address1, $address2, $city, $state, $zip);
 
 
-
+ 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, UPDATE, DELETE");
 header("Content-Type: application/json; charset=utf8");

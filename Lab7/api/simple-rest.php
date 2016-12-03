@@ -36,3 +36,4 @@ header("HTTP/1.1 " . $status . " " . $status_codes[$status]);
 echo json_encode($response, JSON_PRETTY_PRINT);
 
 exit();
+ 
